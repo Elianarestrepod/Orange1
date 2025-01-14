@@ -4,5 +4,12 @@ export const testConfig = {
       username: 'Admin',
       password: 'admin123',
     },
+    invalidUser: {
+      username: 'InvalidUser',
+      password: 'wrongpass',
+    },
+    forgotPasswordUser: {
+      username: 'Test123',
+    },
   };
   

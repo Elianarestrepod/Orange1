@@ -2,27 +2,49 @@ import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/login.page';
 import { testConfig } from '../config/test-config';
 
-/*test('Flujo de login exitoso', async ({ page }) => {
+test('LoginSuccesful', async ({ page }) => {
   const loginPage = new LoginPage(page);
 
-  // Navegar a la página de login
+  // Navigate to the login page
   await loginPage.goto();
 
-  // Completar el formulario de login
+  // Complete the login form
   await loginPage.login(testConfig.validUser.username, testConfig.validUser.password);
 
-  // Validar que el texto "Dashboard" sea visible
+  // Validate the "dashboard" text is visible in the pag
   const dashboardLink = page.locator('a[href="/web/index.php/dashboard/index"]');
 
-});*/
+});
 
 
 test('LoginEmpty', async ({ page }) => {
     const loginPage = new LoginPage(page);
   
-    // Navegar a la página de login
+    /// Navigate to the login page
     await loginPage.goto();
   
-    // Intentar login con campos vacíos y validar mensajes de error
+    // Try to login with empty fields
     await loginPage.loginEmpty();
+  });
+
+
+  test('InvalidUser', async ({ page }) => {
+    const loginPage = new LoginPage(page);
+  
+    /// Navigate to the login page
+    await loginPage.goto();
+  
+    // Complete the login form
+    await loginPage.login(testConfig.invalidUser.username, testConfig.invalidUser.password);
+
+   
+    const InvalidBanner = page.locator('p[class="oxd-text oxd-text--p oxd-alert-content-text"]');
+    await expect(InvalidBanner).toBeVisible();
+    
+    // Catch the error message
+    const InvalidMessage = await InvalidBanner.textContent();
+
+    // Validate the required word is visible
+    expect(InvalidMessage?.trim()).toContain('Invalid credentials');
+
   });
