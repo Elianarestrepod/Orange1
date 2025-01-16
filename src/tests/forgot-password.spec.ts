@@ -2,38 +2,47 @@ import { test, expect } from '@playwright/test';
 import { ForgotPasswordPage } from '../pages/forgot-password.page';
 import { testConfig } from '../config/test-config';
 
+test.describe('Forgot Password Flow', () => {
+  let forgotPasswordPage: ForgotPasswordPage;
 
-test('Navigate to Forgot Password page', async ({ page }) => {
-    // Navegar al flujo de "Forgot Password"
-    const forgotPasswordPage = new ForgotPasswordPage(page);
+  test.beforeEach(async ({ page }) => {
+    forgotPasswordPage = new ForgotPasswordPage(page);
 
-     // Catch the tag that containt the error message
-     const ResetPassword = page.locator('h6[class="oxd-text oxd-text--h6 orangehrm-forgot-password-title"]');
-     
-     // Validate the required word is visible
-     expect(ResetPassword).toBeVisible;
+    // Navegar a la página de inicio
+    await page.goto(testConfig.baseUrl);
 
+    // Navegar al flujo de Forgot Password
+    await forgotPasswordPage.gotoForgotPassword();
+
+    // Validar que el flujo está abierto
+    const resetBanner = page.locator('h6[class="oxd-text oxd-text--h6 orangehrm-forgot-password-title"]');
+    await expect(resetBanner).toBeVisible();
   });
 
- test('ResetPassword', async ({ page }) => {
-   const forgotPasswordPage = new ForgotPasswordPage(page);
- 
-   // Navigate to the login page
-   await forgotPasswordPage.gotoForgotPassword();
- 
-   // Complete the login form
-   await forgotPasswordPage.ResetPassword(testConfig.forgotPasswordUser.username);
- 
-   // Validate the "dashboard" text is visible in the pag
-   const resetbanner = page.locator('h6[class="oxd-text oxd-text--h6 orangehrm-forgot-password-title"]');
-   await expect(resetbanner).toBeVisible();
-    
-    // Catch the error message
-    const ResetTitle = await resetbanner.textContent();
+  test('ForgotPassword', async ({ page }) => {
+    // Validar que el flujo de Forgot Password está abierto
+    const resetBanner = page.locator('h6[class="oxd-text oxd-text--h6 orangehrm-forgot-password-title"]');
+    await expect(resetBanner).toBeVisible();
+  });
 
-    // Validate the required word is visible
-    expect(ResetTitle?.trim()).toContain('Reset Password link sent successfully');
- 
+  test('ResetPassword', async ({ page }) => {
+    // Completar el formulario para resetear la contraseña
+    await forgotPasswordPage.ResetPassword(testConfig.forgotPasswordUser.username);
+
+    // Localizar el banner de "Reset Password"
+    const resetBanner = page.locator('h6[class="oxd-text oxd-text--h6 orangehrm-forgot-password-title"]');
+
+    // Capturar el texto del banner
+    const bannerText = await resetBanner.textContent();
+
+    // Validar que el texto contiene el mensaje esperado
+    expect(bannerText?.trim()).toContain('Reset Password link sent successfully');
+  });
+
+  test('CancelFlow', async ({ page }) => {
+    // Locate the login button
+    const LoginLink = page.locator('button[class="oxd-button oxd-button--medium oxd-button--main orangehrm-login-button"]');
  });
   
-
+  
+});

@@ -23,4 +23,9 @@ export class ForgotPasswordPage {
     await this.page.waitForTimeout(2000);
   }
 
+  async CancelFlow() {
+    await this.page.click(this.cancelButton);
+    await this.page.waitForTimeout(2000);
+  }
+
 }
