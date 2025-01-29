@@ -30,6 +30,4 @@ export class ForgotPasswordPage {
     await this.page.waitForTimeout(2000);
   }
 
-
-
 }
