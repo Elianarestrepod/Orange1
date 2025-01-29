@@ -37,7 +37,7 @@ test('LoginEmpty', async ({ page }) => {
     // Complete the login form
     await loginPage.login(testConfig.invalidUser.username, testConfig.invalidUser.password);
 
-   
+    // Catch the tag that containt the error message
     const InvalidBanner = page.locator('p[class="oxd-text oxd-text--p oxd-alert-content-text"]');
     await expect(InvalidBanner).toBeVisible();
     

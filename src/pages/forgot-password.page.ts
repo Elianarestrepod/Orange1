@@ -1,8 +1,9 @@
 import { Page } from '@playwright/test';
 
+
 export class ForgotPasswordPage {
   private page: Page;
-  private forgotPasswordLink = 'p[class="oxd-text oxd-text--p orangehrm-login-forgot-header"]'; 
+  private forgotPasswordLink = 'div[class="orangehrm-login-forgot"]'; 
   private usernameInput = 'input[placeholder="Username"]'; 
   private resetButton = 'button[class="oxd-button oxd-button--large oxd-button--secondary orangehrm-forgot-password-button orangehrm-forgot-password-button--reset"]';
   private cancelButton = 'button[class="oxd-button oxd-button--large oxd-button--ghost orangehrm-forgot-password-button orangehrm-forgot-password-button--cancel"]'; 
@@ -18,9 +19,17 @@ export class ForgotPasswordPage {
   }
 
   async ResetPassword(username: string) {
+    // Navigate to the forgot password link
     await this.page.fill(this.usernameInput, username);
     await this.page.click(this.resetButton);
     await this.page.waitForTimeout(2000);
   }
+
+  async CancelFlow() {
+    await this.page.click(this.cancelButton);
+    await this.page.waitForTimeout(2000);
+  }
+
+
 
 }
