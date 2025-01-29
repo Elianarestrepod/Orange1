@@ -6,8 +6,8 @@ export default defineConfig({
       name: 'Google Chrome',
       use: {
         browserName: 'chromium',
-        channel: 'chrome', // Usa Google Chrome
-        headless: false,   // Deshabilitar el modo headless para abrir el navegador
+        channel: 'chrome', 
+        headless: false,   
       },
     },
   ],

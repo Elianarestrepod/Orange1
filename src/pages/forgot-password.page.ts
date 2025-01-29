@@ -13,13 +13,13 @@ export class ForgotPasswordPage {
   }
 
   async gotoForgotPassword() {
-    // Navigate to the forgot password link
+    
     await this.page.click(this.forgotPasswordLink);
     await this.page.waitForTimeout(2000);
   }
 
   async ResetPassword(username: string) {
-    // Navigate to the forgot password link
+  
     await this.page.fill(this.usernameInput, username);
     await this.page.click(this.resetButton);
     await this.page.waitForTimeout(2000);
